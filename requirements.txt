@@ -1,0 +1,9 @@
+# Core Web Backend
+Flask>=3.0.0
+
+# Deep Learning & Numerical Computing
+tensorflow>=2.15.0
+numpy>=1.24.0
+
+# Image Processing
+Pillow>=10.0.0

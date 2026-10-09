@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlantGuard AI – Plant Disease Detection System</title>
+  <meta name="description" content="Identify plant diseases instantly using advanced artificial intelligence. Upload a leaf image to receive automated treatment and prevention options.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header>
+    <div class="header-container">
+      <a href="#home" class="logo" id="logo-btn">
+        <i data-lucide="leaf"></i>
+        <span>PlantGuard <span class="logo-accent">AI</span></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <nav id="nav-menu">
+        <a href="#home" class="nav-link active" data-view="home">Home</a>
+        <a href="#detect" class="nav-link" data-view="detect">Detect Disease</a>
+        <a href="#library" class="nav-link" data-view="library">Disease Library</a>
+        <a href="#about" class="nav-link" data-view="about">About</a>
+        <a href="#contact" class="nav-link" data-view="contact">Contact</a>
+        <a href="#detect" class="nav-link nav-cta" data-view="detect">Detect Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main>
+
+    <!-- 1. Home Section -->
+    <section id="home" class="view-section active">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1>Detect Plant Diseases Instantly Using <span>Artificial Intelligence</span></h1>
+          <p>Upload a plant leaf image and let AI identify the plant, detect diseases, and provide treatment recommendations within seconds.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary navigate-btn" data-target="detect">
+              <i data-lucide="scan"></i> Detect Now
+            </button>
+            <button class="btn btn-secondary navigate-btn" data-target="library">
+              <i data-lucide="book-open"></i> Learn More
+            </button>
+          </div>
+        </div>
+        
+        <div class="hero-illustration">
+          <div class="circle-bg"></div>
+          <div class="illustration-wrapper">
+            <div class="floating-icon floating-icon-1"><i data-lucide="cpu"></i></div>
+            <div class="floating-icon floating-icon-2"><i data-lucide="shield-check"></i></div>
+            <div class="floating-icon floating-icon-3"><i data-lucide="activity"></i></div>
+            <div class="floating-icon floating-icon-4"><i data-lucide="sprout"></i></div>
+            <div class="main-plant-card glass-panel">
+              <i data-lucide="leaf" class="plant-icon-main"></i>
+              <div class="laser-line-hero"></div>
+              <div style="font-size: 13px; color: var(--primary); font-weight: 600; text-align:center;">PlantGuard AI Scanner</div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Analyzing cellular structures...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How It Works Section -->
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Get professional crop diagnosis in 4 simple animated steps powered by machine learning algorithms.</p>
+      
+      <div class="how-it-works-grid">
+        <div class="step-card glass-panel">
+          <div class="step-badge">1</div>
+          <div class="step-icon">
+            <i data-lucide="upload-cloud"></i>
+          </div>
+          <h3>Upload Leaf Image</h3>
+          <p>Take or upload a clean photo of the infected crop leaf from your device (up to 10MB).</p>
+        </div>
+
+        <div class="step-card glass-panel">
+          <div class="step-badge">2</div>
+          <div class="step-icon">
+            <i data-lucide="cpu"></i>
+          </div>
+          <h3>AI Image Analysis</h3>
+          <p>Our deep neural networks scan the shape, discoloration, and patterns of the leaf.</p>
+        </div>
+
+        <div class="step-card glass-panel">
+          <div class="step-badge">3</div>
+          <div class="step-icon">
+            <i data-lucide="shield-alert"></i>
+          </div>
+          <h3>Disease Detection</h3>
+          <p>Identify the specific bacterial, fungal, or viral disease with confidence scoring.</p>
+        </div>
+
+        <div class="step-card glass-panel">
+          <div class="step-badge">4</div>
+          <div class="step-icon">
+            <i data-lucide="heart-handshake"></i>
+          </div>
+          <h3>Get Treatment</h3>
+          <p>Receive detailed ecological and chemical control tips to recover plant health.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 2. Detection Section -->
+    <section id="detect" class="view-section">
+      <div class="detection-container">
+        
+        <!-- Upload State Panel -->
+        <div id="upload-panel" class="upload-card glass-panel">
+          <h2 style="margin-bottom: 8px; color: var(--primary-dark); font-weight: 800;">Upload Leaf Sample</h2>
+          <p style="color: var(--text-muted); margin-bottom: 32px; font-size: 15px;">Provide a clear close-up image of a single crop leaf for diagnostic scanning.</p>
+          
+          <div class="dropzone" id="drop-zone">
+            <i data-lucide="upload-cloud" class="dropzone-icon"></i>
+            <h3>Drag & Drop Image Here</h3>
+            <p>or <span style="color: var(--primary); font-weight: 600; text-decoration: underline;">Browse Files</span></p>
+            <input type="file" id="file-input" accept=".jpg, .jpeg, .png" style="display: none;">
+            <p class="file-specs">Supported formats: JPG, PNG, JPEG (Max size: 10 MB)</p>
+          </div>
+        </div>
+
+        <!-- Preview & Simulated Scanning State Panel -->
+        <div id="preview-panel" class="preview-container">
+          <div class="image-frame-wrapper" id="frame-wrapper">
+            <img src="" id="leaf-preview" alt="Leaf preview">
+            <div class="scan-overlay"></div>
+            <div class="scan-laser"></div>
+          </div>
+
+          <div class="detection-actions" id="detection-actions-bar">
+            <button class="btn btn-primary btn-detect" id="start-detect-btn">
+              <i data-lucide="scan"></i> Detect Disease
+            </button>
+            <button class="btn-reset-upload" id="change-image-btn">
+              <i data-lucide="trash-2"></i> Remove and Choose Another
+            </button>
+          </div>
+
+          <!-- Progress and Console Logs -->
+          <div class="scanner-progress-panel glass-panel" id="scanner-progress-box">
+            <div class="progress-label-container">
+              <span id="scan-status-text" style="font-weight: 600; font-size: 14px;">Initializing scanner...</span>
+              <span class="progress-percentage" id="scan-percent">0%</span>
+            </div>
+            <div class="progress-bar-outer">
+              <div class="progress-bar-inner" id="scan-progress-bar"></div>
+            </div>
+            <div class="scanner-console" id="scanner-console-log">
+              <div class="console-line">Booting neural processor...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Result Panel (Dynamically populated, hidden by default) -->
+        <div id="result-panel" class="result-container glass-panel" style="display: none;">
+          <div class="result-card-header">
+            <div class="result-title">
+              <i data-lucide="shield-check" style="width: 28px; height: 28px;"></i>
+              <h2>Analysis Report</h2>
+            </div>
+            <span class="severity-badge severity-medium" id="res-severity">Medium Severity</span>
+          </div>
+
+          <!-- Uncertainty / Ambiguity Alert Banner -->
+          <div id="res-uncertainty-banner" class="uncertainty-banner glass-panel" style="display: none;">
+            <div class="uncertainty-header">
+              <i data-lucide="alert-triangle" class="uncertainty-icon"></i>
+              <div>
+                <h4 id="uncertainty-title">Model is uncertain</h4>
+                <p id="uncertainty-msg">Please upload a clear, close-up image of the affected leaf.</p>
+              </div>
+            </div>
+            <div class="photography-guidelines">
+              <strong>Leaf Photography Guidelines:</strong>
+              <ul>
+                <li><i data-lucide="sun" style="width:14px; height:14px; vertical-align:middle;"></i> <strong>Lighting:</strong> Use natural daylight; avoid harsh flash glare or deep shadows.</li>
+                <li><i data-lucide="focus" style="width:14px; height:14px; vertical-align:middle;"></i> <strong>Framing:</strong> Capture a single leaf close-up, keeping lesion borders sharply in focus.</li>
+                <li><i data-lucide="scissors" style="width:14px; height:14px; vertical-align:middle;"></i> <strong>Background:</strong> Avoid non-leaf backgrounds such as soil, fingers, pavement, or multi-plant clutter.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="result-grid">
+            <!-- Visual Left Panel -->
+            <div class="result-visual-panel">
+              <div class="result-image-frame">
+                <img src="" id="res-img" alt="Analyzed Leaf">
+              </div>
+              <div class="confidence-panel glass-panel">
+                <div class="confidence-label-row">
+                  <span class="confidence-title">Top Prediction Confidence</span>
+                  <span class="confidence-score" id="res-confidence">98.6%</span>
+                </div>
+                <div class="confidence-bar-outer">
+                  <div class="confidence-bar-inner" id="res-confidence-bar" style="width: 98.6%;"></div>
+                </div>
+              </div>
+
+              <!-- Top-3 Predictions Distribution -->
+              <div class="top3-predictions-panel glass-panel">
+                <div class="top3-header">
+                  <i data-lucide="bar-chart-2" style="width: 18px; height: 18px; color: var(--primary);"></i>
+                  <span>Top Predictions</span>
+                </div>
+                <div id="top3-list" class="top3-list">
+                  <!-- Dynamically populated by index.js -->
+                </div>
+                <div class="top3-disclaimer">
+                  <i data-lucide="info" style="width: 12px; height: 12px; vertical-align: middle;"></i>
+                  <span>Softmax probabilities reflect alignment with training dataset patterns, not a guaranteed botanical diagnosis.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text Right Panel -->
+            <div class="diagnostics-panel">
+              <div class="info-block-row">
+                <div class="info-mini-card">
+                  <div class="mini-card-label">Crop Type</div>
+                  <div class="mini-card-value" id="res-crop-name">Tomato</div>
+                </div>
+                <div class="info-mini-card">
+                  <div class="mini-card-label">Diagnosed Disease</div>
+                  <div class="mini-card-value" id="res-disease-name">Early Blight</div>
+                </div>
+              </div>
+
+              <div class="diagnosis-section-card">
+                <h3><i data-lucide="alert-circle" style="width:18px; height:18px;"></i> Primary Symptoms</h3>
+                <ul id="res-symptoms">
+                  <li>Brown circular spots</li>
+                  <li>Yellow edges</li>
+                  <li>Dry leaves</li>
+                </ul>
+              </div>
+
+              <div class="diagnosis-section-card">
+                <h3><i data-lucide="help-circle" style="width:18px; height:18px;"></i> Pathogen / Cause</h3>
+                <p id="res-cause" style="font-size: 14px; color: var(--text-dark); font-weight: 500;">Alternaria solani fungus</p>
+              </div>
+
+              <div class="diagnosis-section-card">
+                <h3><i data-lucide="activity" style="width:18px; height:18px;"></i> Treatment Instructions</h3>
+                <ul id="res-treatment">
+                  <li>Apply fungicide</li>
+                  <li>Remove infected leaves</li>
+                  <li>Avoid overhead watering</li>
+                </ul>
+              </div>
+
+              <div class="diagnosis-section-card">
+                <h3><i data-lucide="shield-check" style="width:18px; height:18px;"></i> Long-term Prevention</h3>
+                <ul id="res-prevention">
+                  <li>Crop rotation</li>
+                  <li>Maintain proper spacing</li>
+                  <li>Monitor plants regularly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-footer-actions">
+            <button class="btn btn-secondary" id="detect-another-btn">
+              <i data-lucide="refresh-cw"></i> Detect Another Leaf
+            </button>
+            <div class="result-footer-group">
+              <button class="btn btn-secondary" id="download-report-btn">
+                <i data-lucide="download"></i> Download Report
+              </button>
+              <button class="btn btn-primary" id="share-result-btn">
+                <i data-lucide="share-2"></i> Share Result
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 3. Disease Library Section -->
+    <section id="library" class="view-section">
+      <h2 class="section-title">Disease Library</h2>
+      <p class="section-subtitle">Browse, search, and filter detailed accounts of common plant diseases, complete with ecological countermeasures.</p>
+
+      <div class="library-controls">
+        <div class="search-wrapper">
+          <i data-lucide="search" class="search-icon-lib"></i>
+          <input type="text" id="library-search-input" placeholder="Search diseases by plant or disease name...">
+        </div>
+        <div class="filter-pills" id="filter-pills-container">
+          <button class="filter-pill active" data-filter="all">All Crops</button>
+          <button class="filter-pill" data-filter="apple">Apple</button>
+          <button class="filter-pill" data-filter="blueberry">Blueberry</button>
+          <button class="filter-pill" data-filter="cherry">Cherry</button>
+          <button class="filter-pill" data-filter="corn">Corn</button>
+          <button class="filter-pill" data-filter="grape">Grape</button>
+          <button class="filter-pill" data-filter="orange">Orange</button>
+          <button class="filter-pill" data-filter="peach">Peach</button>
+          <button class="filter-pill" data-filter="bell pepper">Bell Pepper</button>
+          <button class="filter-pill" data-filter="potato">Potato</button>
+          <button class="filter-pill" data-filter="raspberry">Raspberry</button>
+          <button class="filter-pill" data-filter="soybean">Soybean</button>
+          <button class="filter-pill" data-filter="squash">Squash</button>
+          <button class="filter-pill" data-filter="strawberry">Strawberry</button>
+          <button class="filter-pill" data-filter="tomato">Tomato</button>
+        </div>
+      </div>
+
+      <div class="library-grid" id="library-grid-container">
+        <!-- Cards will be populated by JS -->
+      </div>
+    </section>
+
+
+    <!-- 4. About Section -->
+    <section id="about" class="view-section">
+      <div class="about-hero-card glass-panel">
+        <i data-lucide="sprout" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 16px;"></i>
+        <h2>Empowering Smart Agriculture</h2>
+        <p>PlantGuard AI is a state-of-the-art agricultural classification platform. By merging artificial neural networks with biological crop science, we provide farmers, agronomists, and backyard gardeners with instant, reliable diagnostic support.</p>
+      </div>
+
+      <div class="about-features-grid">
+        <div class="about-feature-card glass-panel">
+          <div class="about-feature-icon">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Instant Diagnosis</h3>
+          <p>Receive plant disease classification outputs and severities in less than 3 seconds of scanning.</p>
+        </div>
+
+        <div class="about-feature-card glass-panel">
+          <div class="about-feature-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Eco-friendly Treatments</h3>
+          <p>We prioritize organic treatments, soil adjustments, and physical prevention systems to secure crop cycles.</p>
+        </div>
+
+        <div class="about-feature-card glass-panel">
+          <div class="about-feature-icon">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <h3>Scalable Engine</h3>
+          <p>Ready to interface with lightweight edge models, Flask servers, or enterprise-scale agricultural platforms.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5. Contact Section -->
+    <section id="contact" class="view-section">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2>Get in Touch</h2>
+          <p>Have questions about integration, data storage, or agricultural research partnerships? Drop us a line and our tech-agri team will reply within 24 hours.</p>
+          
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="mail"></i>
+            </div>
+            <div class="contact-item-text">
+              <h4>Email Address</h4>
+              <p>contact@plantguard.ai</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="contact-item-text">
+              <h4>Research Lab</h4>
+              <p>Silicon Valley Agritech Incubator, CA</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card glass-panel">
+          <form class="contact-form" id="contact-form-element">
+            <div class="form-group">
+              <label for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea id="contact-message" rows="5" placeholder="How can we help your farm?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-contact-send" id="send-msg-btn">
+              <i data-lucide="send"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Disease Detail Modal -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h2 id="modal-disease-title">Disease Name</h2>
+        <button class="modal-close" id="modal-close-btn">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-disease-body">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Containers -->
+  <div class="toast-container" id="toast-box"></div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <i data-lucide="leaf" style="vertical-align: middle; width: 18px; height: 18px; color: var(--primary);"></i>
+        PlantGuard <span>AI</span> © 2026
+      </div>
+      <p>Built with Artificial Intelligence for Smart Agriculture. Securing global food systems, one leaf at a time.</p>
+    </div>
+  </footer>
+
+  <!-- Lucide Script -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Main Logic Script -->
+  <script src="{{ url_for('static', filename='index.js') }}?v=2"></script>
+</body>
+</html>

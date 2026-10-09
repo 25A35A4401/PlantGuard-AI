@@ -1,0 +1,140 @@
+{
+  "validation": {
+    "samples_evaluated": 76,
+    "top1_accuracy": 3.95,
+    "top3_accuracy": 7.89,
+    "macro_precision": 3.22,
+    "macro_recall": 3.95,
+    "macro_f1": 2.68,
+    "weighted_f1": 2.68,
+    "mean_conf_correct": 5.16,
+    "mean_conf_incorrect": 5.47
+  },
+  "calibration_analysis": [
+    {
+      "threshold": 50.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 60.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 70.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 75.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 80.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 85.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    },
+    {
+      "threshold": 90.0,
+      "false_acceptance_count": 0,
+      "false_rejection_count": 3,
+      "false_acceptance_rate_pct": 0.0,
+      "false_rejection_rate_pct": 100.0
+    }
+  ],
+  "training": {
+    "top1_accuracy": 2.63,
+    "macro_f1": 1.55,
+    "generalization_gap": 1.32
+  },
+  "unseen_samples": [
+    {
+      "file": "grape_black_rot.png",
+      "predicted_class": "Cherry_(including_sour)___Powdery_mildew",
+      "confidence": 6.46,
+      "top2_margin": 2.23,
+      "top3": [
+        {
+          "rank": 1,
+          "class": "Cherry_(including_sour)___Powdery_mildew",
+          "confidence": 6.46
+        },
+        {
+          "rank": 2,
+          "class": "Grape___Black_rot",
+          "confidence": 4.23
+        },
+        {
+          "rank": 3,
+          "class": "Corn_(maize)___healthy",
+          "confidence": 4.19
+        }
+      ]
+    },
+    {
+      "file": "tomato_early_blight_leaf.png",
+      "predicted_class": "Potato___Early_blight",
+      "confidence": 30.3,
+      "top2_margin": 22.28,
+      "top3": [
+        {
+          "rank": 1,
+          "class": "Potato___Early_blight",
+          "confidence": 30.3
+        },
+        {
+          "rank": 2,
+          "class": "Tomato___Late_blight",
+          "confidence": 8.02
+        },
+        {
+          "rank": 3,
+          "class": "Tomato___Early_blight",
+          "confidence": 6.42
+        }
+      ]
+    },
+    {
+      "file": "tomato_early_blight_leaf_masked.png",
+      "predicted_class": "Soybean___healthy",
+      "confidence": 5.75,
+      "top2_margin": 1.08,
+      "top3": [
+        {
+          "rank": 1,
+          "class": "Soybean___healthy",
+          "confidence": 5.75
+        },
+        {
+          "rank": 2,
+          "class": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+          "confidence": 4.67
+        },
+        {
+          "rank": 3,
+          "class": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+          "confidence": 4.34
+        }
+      ]
+    }
+  ]
+}
